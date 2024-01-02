@@ -14,7 +14,6 @@ import {
 import Rating from '../components/Rating';
 import Message from '../components/Message';
 import Loader from '../components/Loader';
-
 import products from '../products';
 
 const ProductScreen = () => {
@@ -27,8 +26,6 @@ const ProductScreen = () => {
       <Link className="btn btn-light my-3" to="/">
         Go Back
       </Link>
-
-
 
         <Row>
           <Col md={5}>
