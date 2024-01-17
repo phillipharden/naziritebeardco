@@ -14,7 +14,6 @@ import {
 import Rating from '../components/Rating';
 import Message from '../components/Message';
 import Loader from '../components/Loader';
-// import products from '../products';
 import axios from 'axios';
 
 const ProductScreen = () => {
@@ -40,6 +39,9 @@ const ProductScreen = () => {
         <Row>
           <Col md={5}>
             <Image src={product.image} alt={product.name} fluid />
+            {product.verse ? (<p className="pt-3">{product.verseText} <br></br> -{product.verse}</p>) : (<></> ) }
+
+
           </Col>
           <Col md={4}>
             <ListGroup variant="flush">
@@ -54,6 +56,7 @@ const ProductScreen = () => {
               </ListGroup.Item>
               <ListGroupItem>Price: ${product.price}</ListGroupItem>
               <ListGroupItem>{product.description}</ListGroupItem>
+              <ListGroupItem></ListGroupItem>
             </ListGroup>
           </Col>
           <Col md={3}>
