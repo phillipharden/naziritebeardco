@@ -40,6 +40,9 @@ const productSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
+    imageHover: {
+      type: String,
+    },
     price: {
       type: Number,
       required: true,
@@ -67,11 +70,9 @@ const productSchema = new mongoose.Schema(
     },
     verse: {
       type: String,
-      required: true,
     },
     verseText: {
       type: String,
-      required: true,
     },
   },
   {
