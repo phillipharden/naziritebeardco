@@ -69,3 +69,8 @@ table th {
 .alabaster-bg {
   background-color: #edeade;
 }
+
+.product-img {
+  transition: all 0.5s ease-in-out; 
+}
+
