@@ -41,3 +41,18 @@ The commands are in the package.json listed under:
 `"data:import": "node backend/seeder.js",`
 
 `"data:destroy": "node backend/seeder.js -d"`
+
+In termininal you will run these commands in the root directory:
+
+npm run data:import
+
+npm run data:destroy
+
+
+
+## Redux & Redux-toolkit
+
+[redux.js.org](https://redux.js.org/)
+
+[redux-toolkit.js.org](https://redux-toolkit.js.org/)
+
