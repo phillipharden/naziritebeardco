@@ -2,11 +2,12 @@
 
 # Nazirite Beard Company, Inc
 <br>
-<p style="color: gray; font-size: 12px;">I am building out my own eccomerce site to sell the beard oil that I have been making. It will probably be later this year before it goes live as I still have some i's to dot amd t's to cross. But you are welcome to follow along with my development. I will be updating this readme file as much as possible, leaving as many notes as I can. At times I may be somewhat unorganized but in the end I will clean everything up. I usually do not have projects that are in production public like this, but I am just inviting everyone on my journey.</p>
+<p style="color: gray; font-size: 12px;">I am building out my own eCommerce site to sell the beard oil that I have been making using the MERN stack. It will probably be later this year before it goes live as I still have some i's to dot amd t's to cross. But you are welcome to follow along with my development. I will be updating this readme file as much as possible, leaving as many notes as I can. At times I may be somewhat unorganized but in the end I will clean everything up. I usually do not have projects that are in production public like this, but I am just inviting everyone on my journey.</p>
 <br>
 Phillip Harden
 <br>
 <br><br><br>
+
 ## Frontend
 
 ### Node.js
@@ -653,14 +654,212 @@ Then add a router:
 
 [React Router Bootstrap ](https://www.npmjs.com/package/react-router-bootstrap)
 
-Terminal installing comand:
+Terminal installing command:
 
 `npm i react-router-bootstrap`
 
 <br><br><br><br><br><br><br><br><br><br><br><br><br>
+
 # Backend
 
+
+
+<br>
+
+## Setup
+
+<img src="assets/node.png" alt="Node.js Logo" style=" height: 100px; width: auto;" />
+
+### [Node.js](https://nodejs.org/en)
+
+Back in the root folder/directory I want to create a server-side package.json and any dependencies I use will go into a node_modules folder in the root as well. To create this I will use the terminal command:
+
+`npm init`
+
+I will use server.js instead of index.js just to help me keep tings more organized and have the naming convention make more sense to me.
+
+<br>
+
+### [CommonJS vs ES Modules for Express Node](https://stackoverflow.com/questions/77120722/commonjs-vs-es-modules-for-express-node)
+
+I want to use ES modules so in the package.json I wall add:
+
+`"type": "module",`
+
+By default, Node.js uses common.js, for example:
+
+`const express = require("express");`
+
+ES Modules syntax will import like this:s
+
+`import express from 'express';`
+
+<br>
+
+In my package.json I will replace the "test" with "start":
+
+`"scripts": {
+    "start": "node backend/server.js",  
+  }`
+
+This allows the termonal command (from the root directory)...
+
+`npm start`
+
+...to run the server.js
+
+### Express Dependencies
+
+<img src="assets/Expressjs.png" alt="Express.js Logo" style="height: 75px; width: auto; " />
+
+#### [Express](https://expressjs.com/)
+
+`npm i express`
+
+Here's how I initially set up the server.js for testing purposes...
+
+<img src="assets/server-setup.png" alt="Node.js Logo" style=" height: auto; width: auto;" />
+
+
+<br>
+
+#### * Side Note
+
+There is a great Chrome extension called [JSON Formatter](https://chromewebstore.google.com/detail/json-formatter/bcjindcccaagfpapjjmafapmmgkkhgoa?hl=en-US&utm_source=ext_sidebar) that ill format the JSON data that I get back from my server during the production/testing period of my project.
+
+<br>
+
+In my backend folder I created another folder called "data", there I put my products.js file which is a JSON file of my products so that I can pull data from there until I get my database set up later. 
+
+
+## Nodemon
+
+<img src="assets/nodemon.png" alt="Node.js Logo" style=" height: 100px; width: auto;" />
+
+[Nodemon](https://nodemon.io/)
+
+[Install](https://www.npmjs.com/package/nodemon)
+
+(-D will install as a dev dependency being that I will not need these in production)
+
+`npm i -D nodemon`
+
+Nodemon will allow me to make chages and have them go into effect without restarting the server.
+
+
+## Concurrently
+
+[Concurrently](https://www.npmjs.com/package/concurrently) will allow me to run multiple commands concurrently, this way I can start my frontend & backend at the same time using only one terminal command.
+
+`npm i -D concurrently`
+
+
+<br>
+
+In my root package.json, I will add command to the "script"...
+
+For the backend/server add...
+
+`"server": "nodemon backend/server.js"`
+
+For the frontend add...
+
+`"client": "npm start --prefix frontend"`
+
+And now to run both of these commands using concurrently, add...
+
+`"dev": "concurrently \"npm run server\" \"npm run client\""`
+
+
+## Environment Variables
+
+[dotenv](https://www.npmjs.com/package/dotenv)
+
+`npm i -D dotenv`
+
+Install it as a dev dependency becasue once in production, these variables will be stored in the database.
+In the root, create a file called .env
+
+In the server.js file, I have to import dotenv
+
+`import dotenv from 'dotenv';`
+
+Then call the config method right under the import
+
+`dotenv.config();`
+
+In the .evn file I created a PORT variable
+
+`PORT=8888`
+
+Now I will create a variable to pull the variable from the .env file.
+
+`const port = process.env.PORT || 4444;`
+
+
+The "|| 4444" is my fall back incase the PORT is not available, in which case it would use the 4444 instead of the 8888.
+
+
+<br>
+## Axios
+
+<img src="assets/axios.png" alt="Node.js Logo" style=" height: 100px; width: auto;" />
+
+Instead of using fetch() I will be using [axios](https://www.axios.com/).
+
+[npm axios](https://www.axios.com/)
+
+Through terminal I will `cd frontend/` and install axios using the command line:
+
+`npm i axios`
+
+Once I go into production, to avoid typing out the entire url to fetch data, 
+
+ Example:
+ 
+`fetch('http://localhost:4444/products');`
+
+vs.
+
+`fetch('/products');`
+
+
+I will add a proxy to the package.json file in the frontend folder.
+  
+`"proxy": "http://localhost:4444"  `
+
+<img src="assets/proxy.png" alt="Node.js Logo" style=" height: auto; width: auto;" />
+
+Once in production, I will change the url to the url of my database API.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+<br>
+
 ## MongoDB
+
+<img src="assets/mongodb.png" alt="mongoDB Logo" style="margin-left: 10px; height: 150px; width: auto;" />
+
+### [mongoDB](https://www.mongodb.com/)
 
 [My clusters](https://cloud.mongodb.com/v2/656142bd33d2300fbbd2debd#/clusters) (only I have access to this)
 
@@ -668,11 +867,13 @@ Terminal installing comand:
 
 ## Mongoose
 
-[mongoosejs.com](https://mongoosejs.com/)
+<img src="assets/mongoosejs.png" alt="Mongoose js Logo" style="margin-left: 10px; height: 100px; width: auto;" />
+
+### [mongoosejs.com](https://mongoosejs.com/)
 
 db.js file:
 
-`import mongoose from 'mongoose';
+`import mongoose from 'mongoose';`
 
 const connectDB = async () => {
   try {
@@ -700,16 +901,16 @@ The commands are in the package.json listed under:
 
 In termininal you will run these commands in the root directory:
 
-npm run data:import
+`npm run data:import`
 
-npm run data:destroy
+`npm run data:destroy`
 
 
 
 ## Redux & Redux-toolkit
 
-[redux.js.org](https://redux.js.org/)
+[Redux](https://redux.js.org/)
 
-[redux-toolkit.js.org](https://redux-toolkit.js.org/)
+[Redux Toolkit](https://redux-toolkit.js.org/)
 
 
