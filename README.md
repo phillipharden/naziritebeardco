@@ -833,79 +833,319 @@ I will add a proxy to the package.json file in the frontend folder.
 Once in production, I will change the url to the url of my database API.
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
 <br>
 
 ## MongoDB
 
-<img src="assets/mongodb.png" alt="mongoDB Logo" style="margin-left: 10px; height: 150px; width: auto;" />
+<img src="assets/mongodb.png" alt="mongoDB Logo" style=" height: 150px; width: auto;" />
 
 ### [mongoDB](https://www.mongodb.com/)
 
 [My clusters](https://cloud.mongodb.com/v2/656142bd33d2300fbbd2debd#/clusters) (only I have access to this)
 
+mongodb+srv://<name>:<password>@<name>.qwoggoi.mongodb.net/<databasename>?retryWrites=true&w=majority&appName=<appname>>
+
 <br>
+
+## Compass
+
+<img src="assets/compass.png" alt="mongoDB Logo" style=" height: 150px; width: auto;" />
+
+[Compass](https://www.mongodb.com/products/tools/compass) makes accessing the database much easier.
+
+
+From the [MongoDB site](https://cloud.mongodb.com/v2/656142bd33d2300fbbd2debd#/overview), go to the database, got to "Connect", and chhose the option to connect to "Compass"
+
+<img src="assets/connect-to-compass.png" alt="Connecting to Copmass" style=" height: auto; width: auto;" />
+
+Copy the connection string, and add it to your Compass app on your local machine...
+
+<img src="assets/compass-connection.png" alt="Connecting to Copmass" style=" height: auto; width: auto;" />
+
+
+<br>
+
 
 ## Mongoose
 
 <img src="assets/mongoosejs.png" alt="Mongoose js Logo" style="margin-left: 10px; height: 100px; width: auto;" />
 
-### [mongoosejs.com](https://mongoosejs.com/)
+#### [Mongoosejs](https://mongoosejs.com/)
+To be able to connect to the database through the application to make queries, I will use Mongoosejs, an object data mapper. 
+
+Install it in the backend dependencies;
+
+`npm i mongoose`
+
+Then create a config file in the backend to connect to the database. Creat a folder called "config" and inside it a file called db.js.
 
 db.js file:
 
 `import mongoose from 'mongoose';`
 
-const connectDB = async () => {
-  try {
-    const conn = await mongoose.connect(process.env.MONGO_URI);
-    console.log(`Mongoose Connected: ${conn.connection.host}`);
-  } catch (error) {
-    console.log(`Error: ${error.message}`);
-    process.exit(1);
+<img src="assets/db.png" alt="db.js file" style=" height: auto; width: auto;" />
+
+Then import it into the server.js file...
+
+`import connectDB from './config/db.js';`
+
+...then call it below the import...
+
+`connectDB();`
+
+<br>
+
+### Model the data
+
+( [What is Data Modeling?](https://www.ibm.com/topics/data-modeling) )
+
+In the backend, create a folder called models,
+inside create a file called productsModel,js
+
+Here I will create the schema and export it as a model.
+
+
+
+```
+import mongoose from 'mongoose';
+
+const reviewSchema = mongoose.Schema(
+  {
+    user: {
+      type: mongoose.Schema.Types.ObjectId,
+      required: true,
+      ref: 'User',
+    },
+    name: {
+      type: String,
+      required: true,
+    },
+    rating: {
+      type: Number,
+      required: true,
+    },
+    comment: {
+      type: String,
+      required: true,
+    },
+  },
+  {
+    timestamps: true,
   }
-};
-* 
-export default connectDB;`
+);
 
+const productSchema = new mongoose.Schema(
+  {
+    user: {
+      type: mongoose.Schema.Types.ObjectId,
+      required: true,
+      ref: 'User',
+    },
+    name: {
+      type: String,
+      required: true,
+    },
+    image: {
+      type: String,
+      required: true,
+    },
+    imageHover: {
+      type: String,
+    },
+    price: {
+      type: Number,
+      required: true,
+      default: 0,
+    },
+    description: {
+      type: String,
+      required: true,
+    },
+    reviews: [reviewSchema],
+    rating: {
+      type: Number,
+      required: true,
+      default: 0,
+    },
+    numReviews: {
+      type: Number,
+      required: true,
+      default: 0,
+    },
+    countInStock: {
+      type: Number,
+      required: true,
+      default: 0,
+    },
+    verse: {
+      type: String,
+    },
+    verseText: {
+      type: String,
+    },
+  },
+  {
+    timestamps: true,
+  }
+);
 
+const Product = mongoose.model('Product', productSchema);
+
+export default Product;
+```
+Then I will create a usrModel.js
+
+```
+import mongoose from 'mongoose';
+
+const userSchema = mongoose.Schema(
+  {
+    name: {
+      type: String,
+      required: true,
+    },
+    email: {
+      type: String,
+      required: true,
+      unique: true,
+    },
+    password: {
+      type: String,
+      required: true,
+    },
+    isAdmin: {
+      type: Boolean,
+      required: true,
+      default: false,
+    },
+  },
+  {
+    timestamps: true,
+  }
+);
+
+const User = mongoose.model('User', userSchema);
+
+export default User;
+```
+<br>
+
+## Database Seeder
+
+Before seeding the uers, I want to install [bcryptjs](https://www.npmjs.com/package/bcryptjs) in the root directory, so that the passwords will be hashed. 
+
+`npm i bcryptjs`
+
+```
+import bcrypt from 'bcryptjs';
+
+const users = [
+    {
+        name: "Admin User",
+        email: "phillip@geail.com",
+        password: bcrypt.hashSync('password123', 10),
+        isAdmin: true,
+    },
+    {
+        name: "John Doe",
+        email: "john@email.com",
+        password: bcrypt.hashSync('password123', 10),
+        isAdmin: false,
+    },
+    {
+        name: "Jane Doe",
+        email: "jane@email.com",
+        password: bcrypt.hashSync('password123', 10),
+        isAdmin: false,
+    },
+];
+
+export default users;
+```
+[npm colors](https://www.npmjs.com/package/color) will add colors to terminal.
 
 
 seeder.js
-add or delete database
 
-The commands are in the package.json listed under:
+```
+import mongoose from 'mongoose';
+import dotenv from 'dotenv';
+import colors from 'colors';
+import users from './data/users.js';
+import products from './data/products.js';
+import User from './models/userModel.js';
+import Product from './models/productModel.js';
+import Order from './models/orderModel.js';
+import connectDB from './config/db.js';
 
-`"data:import": "node backend/seeder.js",`
+dotenv.config();
+connectDB();
 
-`"data:destroy": "node backend/seeder.js -d"`
+const importData = async () => {
+  try {
+    await Order.deleteMany();
+    await Product.deleteMany();
+    await User.deleteMany();
 
-In termininal you will run these commands in the root directory:
+    const createdUsers = await User.insertMany(users);
+
+    const adminUser = createdUsers[0]._id;
+
+    const naziriteProducts = products.map((product) => {
+      return {
+        ...product,
+        user: adminUser,
+      };
+    });
+
+    await Product.insertMany(naziriteProducts);
+
+    console.log('Data Imported!'.green.inverse);
+    process.exit();
+  } catch (error) {
+    console.log(`${error}`.red.inverse);
+    process.exit(1);
+  }
+};
+const destroyData = async () => {
+  try {
+    await Order.deleteMany();
+    await Product.deleteMany();
+    await User.deleteMany();
+
+    console.log('Data Destroyed!'.red.inverse);
+    process.exit();
+  } catch (error) {
+    console.log(`${error}`.red.inverse);
+    process.exit(1);
+  }
+};
+
+if (process.argv[2] === '-d') {
+  destroyData();
+} else {
+  importData();
+}
+```
+
+To run seeder.js add commands to the package.json:
+
+```
+"data:import": "node backend/seeder.js",
+"data:destroy": "node backend/seeder.js -d"
+```
+
+In termininal you will run these commands in the root directory...
+
+To import:
 
 `npm run data:import`
 
+To destroy:
+
 `npm run data:destroy`
 
-
+<br><br><br><br><br><br><br>
 
 ## Redux & Redux-toolkit
 

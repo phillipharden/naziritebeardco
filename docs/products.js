@@ -1,5 +1,6 @@
 const products = [ 
   {
+    _id: '1',
     brand: 'Nazirite beard Co',
     name: 'Wise Man',
     image: '/images/wiseman.png',
@@ -7,13 +8,14 @@ const products = [
       'Indulge in the regal sophistication of "Wise Man," a beard oil scent truly fit for a king. Immerse yourself in the timeless allure of this majestic fragrance, crafted with the exquisite richness of frankincense and myrrh. As you apply "Wise Man," experience the opulent opening notes of frankincense, a resinous aroma that captivates with its deep, spiritual character. Myrrh follows, adding a warm and earthy depth that envelops you in a sense of regality. This scent, reminiscent of ancient rituals and wisdom, is designed to evoke the majesty and refinement befitting a true leader. As the oil conditions and nourishes your beard, let "Wise Man" become a symbol of your discerning taste and commanding presence, a daily indulgence in the luxurious essence of kingship.',
     category: 'Beard Oil',
     price: 9.99,
-    countInStock: 0,
+    countInStock: 4,
     rating: 4.5,
     numReviews: 12,
     verse: 'Matthew 2:11',
     verseText: 'On coming to the house, they saw the child with his mother Mary, and they bowed down and worshiped him. Then they opened their treasures and presented him with gifts of gold, frankincense and myrrh.'
   },
   {
+    _id: '2',
     brand: 'Nazirite beard Co',
     name: 'Samson',
     image: '/images/samson.png',
@@ -28,6 +30,7 @@ const products = [
     verseText: 'You will become pregnant and have a son whose head is never to be touched by a razor because the boy is to be a Nazirite, dedicated to God from the womb. He will take the lead in delivering Israel from the hands of the Philistines.',
   },
   {
+    _id: '3',
     brand: 'Nazirite beard Co',
     name: 'Samuel',
     image: '/images/samuel.png',    
@@ -42,6 +45,7 @@ const products = [
     verseText: 'And she made a vow, saying, “Lord Almighty, if you will only look on your servant’s misery and remember me, and not forget your servant but give her a son, then I will give him to the Lord for all the days of his life, and no razor will ever be used on his head.',
   },
   {
+    _id: '4',
     brand: 'Nazirite beard Co',
     name: 'John the Baptist',
     image: '/images/johnthebaptist.png', 
