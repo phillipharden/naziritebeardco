@@ -1,6 +1,6 @@
 # Nazirite Beard Company, Inc
 <br>
-Phillip harden
+Phillip Harden
 <br>
 
 ## MongoDB
@@ -9,11 +9,9 @@ https://cloud.mongodb.com/v2/656142bd33d2300fbbd2debd#/clusters
 
 <br>
 
-
 ## Mongoose
 
 [mongoosejs.com](https://mongoosejs.com/)
-
 
 db.js file:
 
