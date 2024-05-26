@@ -8,11 +8,10 @@ import {
 } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import store from './store';
-// import 'bootstrap/dist/css/bootstrap.min.css';
-import './assets/styles/bootstrap.custom.css';
+// import 'bootstrap/dist/css/bootstrap.min.css';  // regular Bootstrap
+import './assets/styles/bootstrap.custom.css';     // custom Bootstrap
 import './assets/styles/index.css';
 import App from './App';
-import reportWebVitals from './reportWebVitals';
 import HomeScreen from './screens/HomeScreen';
 import ProductScreen from './screens/ProductScreen';
 
@@ -20,7 +19,7 @@ const router = createBrowserRouter(
   createRoutesFromElements(
     <Route path="/" element={<App />}>
       <Route index={true} path="/" element={<HomeScreen />} />
-      <Route path="/product/:id" element={<ProductScreen />} />
+      <Route  path="/product/:id" element={<ProductScreen />} />
     </Route>
   )
 );
@@ -33,5 +32,3 @@ root.render(
     </Provider>
   </React.StrictMode>
 );
-
-reportWebVitals();

@@ -1,65 +1,12 @@
+<div style="display: flex; align-items: center;"><img src="assets/logo1.png" alt="Nazirite Beard Company Logo" style="margin-left: 10px; height: 100px; width: auto;" /></div>
+
 # Nazirite Beard Company, Inc
+<br>
+<p style="color: gray; font-size: 12px;">I am building out my own eccomerce site to sell the beard oil that I have been making. It will probably be later this year before it goes live as I still have some i's to dot amd t's to cross. But you are welcome to follow along with my development. I will be updating this readme file as much as possible, leaving as many notes as I can. At times I may be somewhat unorganized but in the end I will clean everything up. I usually do not have projects that are in production public like this, but I am just inviting everyone on my journey.</p>
 <br>
 Phillip Harden
 <br>
-
-## MongoDB
-
-https://cloud.mongodb.com/v2/656142bd33d2300fbbd2debd#/clusters
-
-<br>
-
-## Mongoose
-
-[mongoosejs.com](https://mongoosejs.com/)
-
-db.js file:
-
-`import mongoose from 'mongoose';
-
-const connectDB = async () => {
-  try {
-    const conn = await mongoose.connect(process.env.MONGO_URI);
-    console.log(`Mongoose Connected: ${conn.connection.host}`);
-  } catch (error) {
-    console.log(`Error: ${error.message}`);
-    process.exit(1);
-  }
-};
-* 
-export default connectDB;`
-
-
-
-
-seeder.js
-add or delete database
-
-The commands are in the package.json listed under:
-
-`"data:import": "node backend/seeder.js",`
-
-`"data:destroy": "node backend/seeder.js -d"`
-
-In termininal you will run these commands in the root directory:
-
-npm run data:import
-
-npm run data:destroy
-
-
-
-## Redux & Redux-toolkit
-
-[redux.js.org](https://redux.js.org/)
-
-[redux-toolkit.js.org](https://redux-toolkit.js.org/)
-
-
-# Nazirite Beard Oils
-
-
-
+<br><br><br>
 ## Frontend
 
 ### Node.js
@@ -710,6 +657,59 @@ Terminal installing comand:
 
 `npm i react-router-bootstrap`
 
+<br><br><br><br><br><br><br><br><br><br><br><br><br>
+# Backend
 
+## MongoDB
+
+[My clusters](https://cloud.mongodb.com/v2/656142bd33d2300fbbd2debd#/clusters) (only I have access to this)
+
+<br>
+
+## Mongoose
+
+[mongoosejs.com](https://mongoosejs.com/)
+
+db.js file:
+
+`import mongoose from 'mongoose';
+
+const connectDB = async () => {
+  try {
+    const conn = await mongoose.connect(process.env.MONGO_URI);
+    console.log(`Mongoose Connected: ${conn.connection.host}`);
+  } catch (error) {
+    console.log(`Error: ${error.message}`);
+    process.exit(1);
+  }
+};
+* 
+export default connectDB;`
+
+
+
+
+seeder.js
+add or delete database
+
+The commands are in the package.json listed under:
+
+`"data:import": "node backend/seeder.js",`
+
+`"data:destroy": "node backend/seeder.js -d"`
+
+In termininal you will run these commands in the root directory:
+
+npm run data:import
+
+npm run data:destroy
+
+
+
+## Redux & Redux-toolkit
+
+[redux.js.org](https://redux.js.org/)
+
+[redux-toolkit.js.org](https://redux-toolkit.js.org/)
 
 
