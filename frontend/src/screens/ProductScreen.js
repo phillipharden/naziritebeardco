@@ -1,6 +1,5 @@
-// import { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useParams } from "react-router-dom";
-import products from "../products";
 import { Link } from "react-router-dom";
 import {
   Row,
@@ -14,22 +13,20 @@ import {
 import Rating from "../components/Rating";
 // import Message from '../components/Message';
 // import Loader from '../components/Loader';
-// import axios from 'axios';
+import axios from 'axios';
 
 const ProductScreen = () => {
-  // const [ product, setProduct ] = useState({});
-
+  const [ product, setProduct ] = useState({});
   const { id: productId } = useParams();
-  const product = products.find((p) => p._id === productId);
 
-  // useEffect(() => {
-  //   const fetchProduct = async () => {
-  //     const { data } = await axios.get(`/api/products/${productId}`);
-  //     setProduct(data);
-  //   }
+  useEffect(() => {
+    const fetchProduct = async () => {
+      const { data } = await axios.get(`/api/products/${productId}`);
+      setProduct(data);
+    }
 
-  //   fetchProduct();
-  // }, [productId]);
+    fetchProduct();
+  }, [productId]);
 
   return (
     <>
