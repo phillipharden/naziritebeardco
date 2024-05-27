@@ -6,14 +6,25 @@
 <br>
 Phillip Harden
 <br>
+
+<img src="assets/MERN.png" alt="MERN stack Logo" style=" height: auto
+; width: auto;" />
+
+
 <br><br><br>
 
 ## Frontend
 
 ### Node.js
+
+<img src="assets/node.png" alt="Node.js Logo" style=" height: 100px; width: auto;" />
+
 Install [Node.js](https://nodejs.org/en) on local machine.
  
 ### React 
+
+<img src="assets/react.png" alt="Node.js Logo" style=" height: 100px; width: auto;" />
+
 Create the [React.js](https://react.dev/) folder in the directory with terminal using the command line:
 
 `npx create-react-app frontend`
@@ -606,6 +617,8 @@ export default (WrappedComponent) => {
 
 ## Bootstrap
 
+<img src="assets/bootstrap.png" alt="Node.js Logo" style=" height: 100px; width: auto;" />
+
 I am using 
 
 * React-Bootstrap [npm](https://www.npmjs.com/package/react-bootstrap) / [react](https://react-bootstrap.netlify.app/)
@@ -843,7 +856,7 @@ Once in production, I will change the url to the url of my database API.
 
 [My clusters](https://cloud.mongodb.com/v2/656142bd33d2300fbbd2debd#/clusters) (only I have access to this)
 
-mongodb+srv://<name>:<password>@<name>.qwoggoi.mongodb.net/<databasename>?retryWrites=true&w=majority&appName=<appname>>
+`mongodb+srv://<name>:<password>@<name>.qwoggoi.mongodb.net/<databasename>?retryWrites=true&w=majority&appName=<appname>`
 
 <br>
 
@@ -868,7 +881,7 @@ Copy the connection string, and add it to your Compass app on your local machine
 
 ## Mongoose
 
-<img src="assets/mongoosejs.png" alt="Mongoose js Logo" style="margin-left: 10px; height: 100px; width: auto;" />
+<img src="assets/mongoosejs.png" alt="Mongoose js Logo" style="height: 100px; width: auto;" />
 
 #### [Mongoosejs](https://mongoosejs.com/)
 To be able to connect to the database through the application to make queries, I will use Mongoosejs, an object data mapper. 
@@ -1135,7 +1148,20 @@ To run seeder.js add commands to the package.json:
 "data:destroy": "node backend/seeder.js -d"
 ```
 
-In termininal you will run these commands in the root directory...
+The code in seeder.js...
+
+```
+if (process.argv[2] === '-d') {
+  destroyData();
+} else {
+  importData();
+}
+```
+...is determining if the "-d" is present or not to determine if we are adding data or destroying data.
+
+<br>
+
+In terminal you will run these commands in the root directory...
 
 To import:
 
@@ -1145,7 +1171,148 @@ To destroy:
 
 `npm run data:destroy`
 
-<br><br><br><br><br><br><br>
+
+
+<br>
+
+## Postman
+ 
+<img src="assets/postman.png" alt="Mongoose js Logo" style="height: auto; width: 200px;" />
+ 
+[Postman](https://www.postman.com/) is a global software company that offers an API platform for developers to design, build, test, and collaborate on APIs.
+
+I use this to make API queries to test my database.
+
+## Routing
+
+In my backend, I created a folder called "Routes" to add all of my routes instead of having them pile up in server.js
+
+More about Express routing 👉 [here](https://expressjs.com/en/guide/routing.html)
+
+Inside the Routes folder, I created my routes...
+
+ **productRoutes.js**
+
+```
+import express from "express";
+const router = express.Router();
+import asyncHandler from "../middleware/asyncHandler.js";
+import Product from "../models/productModels.js";
+
+router.get(
+  "/",
+  asyncHandler(async (req, res) => {
+    const products = await Product.find({});
+    res.json(products);
+  })
+);
+
+router.get(
+  "/:id",
+  asyncHandler(async (req, res) => {
+    const product = await Product.findById(req.params.id);
+
+    if (product) {
+      res.json(product);
+    }
+    res.status(404).json({ message: "Product not found" });
+  })
+);
+
+export default router;
+
+```
+
+I created a folder in the beackend called "middleware" and added a file named "asyncHandler.js", instrad of using a thrid party like...
+
+[express-async-handler: ](https://www.npmjs.com/package/express-async-handler): Simple middleware for handling exceptions inside of async express routes and passing them to your express error handlers.
+
+```
+const asyncHandler = (fn) => (req, res, next) => {
+  Promise.resolve(fn(req, res, next)).catch(next);
+};
+
+export default asyncHandler;
+```
+
+
+<br>
+
+## Custom Error Handler
+
+In the middleware folder, create a new file called "errorMiddleware.js" to create a custom error handler.
+
+<img src="assets/errorHandler.png" alt="Mongoose js Logo" style="height: auto; width: auto
+;" />
+
+In server.js add...
+
+```
+app.use(notFound); 
+app.use(errorHandler);
+```
+
+
+In productRoutes.js file, I will impliment the new error handler...
+
+<img src="assets/errHandlerproductRoutes.png" alt="Mongoose js Logo" style="height: auto; width: auto
+;" />
+
+<br>
+
+## Controllers
+
+To keep things more organized, create a folder in the backend called "controllers". In controllers are the routes and logic so that the routes files do not get too cluttered.  
+
+<img src="assets/productController.png" alt="Mongoose js Logo" style="height: auto; width: auto
+;" />
+
+In productRoutes.js, this code...
+
+```
+router.get(
+  "/",
+  asyncHandler(async (req, res) => {
+    const products = await Product.find({});
+    res.json(products);
+  })
+);
+```
+...can be replace with a single line;
+
+`router.route('/').get(getProducts);`
+
+...after importing the functions from productController.
+
+`import { getProducts, getProductById } from '../controllers/productController.js';`
+
+<br>
+
+Get a single product can now be cleaned up as well, going from...
+
+```
+router.get(
+  "/:id",
+  asyncHandler(async (req, res) => {
+    const product = await Product.findById(req.params.id);
+
+    if (product) {
+      res.json(product);
+    } else {
+      res.status(404).json({ message: "Product not found" });
+    }    
+  })
+);
+```
+
+...to:
+
+`router.route('/:id').get(getProductById);`
+
+
+
+
+<br><br><br><br><br>
 
 ## Redux & Redux-toolkit
 

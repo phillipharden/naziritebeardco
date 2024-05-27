@@ -32,6 +32,11 @@ const productSchema = new mongoose.Schema(
       required: true,
       ref: 'User',
     },
+    brand: {
+      type: String,
+      required: true,    
+
+    },
     name: {
       type: String,
       required: true,
@@ -40,15 +45,16 @@ const productSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
-    imageHover: {
-      type: String,
-    },
     price: {
       type: Number,
       required: true,
       default: 0,
     },
     description: {
+      type: String,
+      required: true,
+    },
+    category: {
       type: String,
       required: true,
     },

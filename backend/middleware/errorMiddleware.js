@@ -4,14 +4,14 @@ const notFound = (req, res, next) => {
     next(error);
   };
   
-  // This will override the default error handlers
+  // This will override the default (express) error handlers
   const errorHandler = (err, req, res, next) => {
     let statusCode = res.statusCode === 200 ? 500 : res.statusCode;
     let message = err.message;
   
-    // Check for Mongoose bad ObjectId
+    // Check for Mongoose bad ObjectId (CastError)
     if (err.name === 'CastError' && err.kind === 'ObjectId') {
-      message = `Resource not found`;
+      message = `Item not found`;
       statusCode = 404;
     }
   
