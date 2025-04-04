@@ -1,10 +1,10 @@
-import React from 'react';
-import { useEffect, useState } from 'react';
+import React from "react";
+import { useEffect, useState } from "react";
 import { Row, Col } from "react-bootstrap";
 import Product from "../components/Product";
 // import Benefits from '../components/Benefits';
 // import Banner from '../components/Banner';
-import axios from 'axios';
+import axios from "axios";
 // import Loader from '../components/Loader';
 // import Message from '../components/Message';
 // import { useGetProductsQuery } from '../slices/productsApiSlice';
@@ -14,13 +14,13 @@ const HomeScreen = () => {
 
   useEffect(() => {
     const fetchProducts = async () => {
-      const { data } = await axios.get('/api/products');
+      const { data } = await axios.get("/api/products");
       setProducts(data);
     };
     fetchProducts();
   }, []);
 
-    // const { data: products, isLoading, error } = useGetProductsQuery();
+  // const { data: products, isLoading, error } = useGetProductsQuery();
 
   return (
     <>

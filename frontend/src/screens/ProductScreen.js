@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { Link } from "react-router-dom";
 import {
@@ -13,17 +13,17 @@ import {
 import Rating from "../components/Rating";
 // import Message from '../components/Message';
 // import Loader from '../components/Loader';
-import axios from 'axios';
+import axios from "axios";
 
 const ProductScreen = () => {
-  const [ product, setProduct ] = useState({});
+  const [product, setProduct] = useState({});
   const { id: productId } = useParams();
 
   useEffect(() => {
     const fetchProduct = async () => {
       const { data } = await axios.get(`/api/products/${productId}`);
       setProduct(data);
-    }
+    };
 
     fetchProduct();
   }, [productId]);
@@ -110,8 +110,7 @@ const ProductScreen = () => {
                   className="btn-block"
                   type="button;"
                   disabled={product.countInStock === 0}
-                  onClick={""}
-                >
+                  onClick={""}>
                   Add To Cart
                 </Button>
               </ListGroup.Item>
